@@ -42,4 +42,5 @@ namespace ELOTEC.Models
         public int UserId { get; set; }
         public int DeviceId { get; set; }
     }
+
 }
