@@ -10,6 +10,7 @@ CREATE TABLE [dbo].[Item_Details](
 	[ItemId] [bigint] IDENTITY(1,1) NOT NULL,
 	[ItemName] [varchar](50) NOT NULL,
 	[IsActive] [bit] NOT NULL,
+	[IsCustom] [bit] NOT NULL,
  CONSTRAINT [PK_Item_Details] PRIMARY KEY CLUSTERED 
 (
 	[ItemId] ASC

@@ -10,7 +10,12 @@ CREATE TABLE [dbo].[Device_Details](
 	[DeviceId] [bigint] IDENTITY(1,1) NOT NULL,
 	[DeviceName] [nvarchar](50) NOT NULL,
 	[RoomNoId] [bigint] NOT NULL,
-	[IsActive] [bit] NULL,
+	[IsActive] [bit] NOT NULL,
+	[RadorAdjustLevel] [int] NOT NULL,
+	[RadorAdjustStatus] [bit] NOT NULL,
+	[DbMeterAdjustLevel] [int] NOT NULL,
+	[DbMeterAdjustStatus] [bit] NOT NULL,
+	[BeepStatus] [bit] NOT NULL,
  CONSTRAINT [PK_Device_Details] PRIMARY KEY CLUSTERED 
 (
 	[DeviceId] ASC

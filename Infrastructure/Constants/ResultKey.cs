@@ -10,5 +10,6 @@
         public const string LastUpdatedInfo = "LastUpdatedInfo";
         public const string RegistrationDetails = "RegistrationDetails";
         public const string UserId = "UserId";
+        public const string CustomItemList = "CustomItemList";
     }
 }
