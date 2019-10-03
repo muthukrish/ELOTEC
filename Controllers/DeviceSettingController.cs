@@ -49,10 +49,25 @@ namespace ELOTEC.Controllers
         //{
         //}
         [HttpGet]
+        [Route("GetDeviceSettingDetails")]
+        public async Task<ActionResult> GetDeviceSettingDetails(int userId, int deviceId) {
+            var DeviceSettingDetails = await _IDeviceSetting.GetDeviceSettingDetails(userId, deviceId);
+            return Json(DeviceSettingDetails);
+        }
+
+        [HttpGet]
         [Route("UpdateDeviceSetting")]
         public async Task<ActionResult> UpdateDeviceSetting(int userId, int deviceId,int RadorlevelVal,byte radorOnOffStatus, int dbMeterLevelval,byte dbmeterOnOff,byte beepOnoff) {
             var UpdatedStatus = await _IDeviceSetting.UpdateDeviceSetting(userId, deviceId, RadorlevelVal, radorOnOffStatus, dbMeterLevelval, dbmeterOnOff, beepOnoff);
             return Json(UpdatedStatus);
+        }
+
+        [HttpGet]
+        [Route("GetDeviceDetails")]
+        public async Task<ActionResult> GetDeviceDetails(int userId, int deviceId)
+        {
+            var DeviceDetails = await _IDeviceSetting.GetDeviceDetails(userId, deviceId);
+            return Json(DeviceDetails);
         }
     }
 }

@@ -11,5 +11,6 @@
         public const string RegistrationDetails = "RegistrationDetails";
         public const string UserId = "UserId";
         public const string CustomItemList = "CustomItemList";
+        public const string DeviceSettingDetails = "DeviceSettingDetails";
     }
 }

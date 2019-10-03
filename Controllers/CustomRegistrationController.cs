@@ -65,8 +65,5 @@ namespace ELOTEC.Controllers
             var UpdatedStatus = await _ICustomRegiatration.UpdateCustomItem(userId, deviceId, itemId, RegStatus);
             return Json(UpdatedStatus);
         }
-            
-
-
     }
 }
