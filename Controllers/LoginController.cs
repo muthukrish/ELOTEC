@@ -24,26 +24,26 @@
             this._loginRepo = new LoginRepo();
             _jwtTokenGenerator = jwtTokenGenerator;
         }
-        [AllowAnonymous]
-        [HttpPost]
-        [Route("Login")]
-        // [Route(Routes.Login)]
-        public async Task<IActionResult> CheckLogincredentials([FromForm]Authenticationuser login)
-        {
-            try
-            {
-                var loginResponse = await _loginRepo.LoginCheck(login.UserName, login.PassWord);
-                if (Convert.ToBoolean(loginResponse[ResultKey.Success]))
-                {
-                    loginResponse[ResultKey.Token] = await _jwtTokenGenerator.CreateToken(login.UserName);
-                }
-                return Json(loginResponse);
-            }
-            catch (Exception ex) {
-                throw ex;
-            }
+        //[AllowAnonymous]
+        //[HttpPost]
+        //[Route("Login")]
+        //// [Route(Routes.Login)]
+        //public async Task<IActionResult> CheckLogincredentials([FromForm]Authenticationuser login)
+        //{
+        //    try
+        //    {
+        //        var loginResponse = await _loginRepo.LoginCheck(login.UserName, login.PassWord);
+        //        if (Convert.ToBoolean(loginResponse[ResultKey.Success]))
+        //        {
+        //            loginResponse[ResultKey.Token] = await _jwtTokenGenerator.CreateToken(login.UserName);
+        //        }
+        //        return Json(loginResponse);
+        //    }
+        //    catch (Exception ex) {
+        //        throw ex;
+        //    }
            
-        }
+        //}
 
         [AllowAnonymous]
         [HttpGet]

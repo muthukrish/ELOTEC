@@ -20,7 +20,7 @@ namespace ELOTEC.Access.Repositories
         }
 
 
-        public async Task<ResultObject> GetDeviceSettingDetails(string filterStr, DateTime fromDateVal, DateTime todateVal, string deviceName, int userId)
+        public async Task<ResultObject> GetDeviceSettingDetails(string filterStr, string fromDateVal, string todateVal, string deviceName, int userId)
         {
             try
             {
@@ -34,11 +34,12 @@ namespace ELOTEC.Access.Repositories
                         dap.SelectCommand.CommandType = CommandType.StoredProcedure;
                         dap.SelectCommand.Parameters.AddWithValue("@filterStr", filterStr);
                         dap.Fill(dsDeviceList);
+                        List<ConfiguredRoomVM> DeviceList = new List<ConfiguredRoomVM>();
                         if (dsDeviceList.Tables.Count > 0)
                         {
                             _result[ResultKey.Success] = true;
                             _result[ResultKey.Message] = Message.Success;
-                            List<ConfiguredRoomVM> DeviceList = new List<ConfiguredRoomVM>();
+                           
                             foreach (DataRow x in dsDeviceList.Tables[0].Rows)
                             {
                                 ConfiguredRoomVM objCP = new ConfiguredRoomVM();
@@ -53,8 +54,9 @@ namespace ELOTEC.Access.Repositories
                         }
                         else
                         {
-                            _result[ResultKey.Success] = false;
-                            _result[ResultKey.Message] = "something went wrong";
+                            _result[ResultKey.Success] = true;
+                            _result[ResultKey.Message] = Message.Success;
+                            _result[ResultKey.DeviceSettingDetails] = DeviceList;
                         }
                     }
                     sqlConnection.Close();

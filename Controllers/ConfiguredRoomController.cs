@@ -53,7 +53,7 @@ namespace ELOTEC.Controllers
 
         [HttpGet]
         [Route("GetDeviceList")]
-        public async Task<ActionResult> GetDeviceList(DateTime fromDateVal, DateTime todateVal, string deviceName, int userId)
+        public async Task<ActionResult> GetDeviceList(string fromDateVal, string todateVal, string deviceName, int userId)
         {
             string filterStr = "";
             filterStr = " where RegistrationId > 0 and isActive=1";
@@ -69,7 +69,7 @@ namespace ELOTEC.Controllers
             {
                 filterStr = filterStr + " and ((Updated_Date <= '" + String.Format("{0:M/d/yyyy}", todateVal) + "') or Updated_Date is null)";
             }
-            if (deviceName != "")
+            if (deviceName != "" && deviceName != null)
             {
                 filterStr = filterStr + " and DeviceName ='" + deviceName + "'";
             }

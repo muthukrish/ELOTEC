@@ -20,33 +20,33 @@ namespace ELOTEC.Controllers
         {
             this._RegistrationDetails = new RegistrationDetailsRepo();
         }
-        [HttpPost]
-        [Route("UpdateRegistration")]
-        [Authorize(AuthenticationSchemes = JwtIssuerOptions.Schemes)]
-        public async Task<IActionResult> UpdateRegistrationDetails([FromForm]Registration lstRegistration)
-        {
-            var RegistrationDetailsStatus = await _RegistrationDetails.UpdateRegistrationDetails(lstRegistration.UserId, lstRegistration.DeviceId, lstRegistration.ItemId, lstRegistration.IsReg, lstRegistration.Axis);
-            //return Json(new { Message = "Success" });
-            return Json(RegistrationDetailsStatus);
-        }
+        //[HttpPost]
+        //[Route("UpdateRegistration")]
+        //[Authorize(AuthenticationSchemes = JwtIssuerOptions.Schemes)]
+        //public async Task<IActionResult> UpdateRegistrationDetails([FromForm]Registration lstRegistration)
+        //{
+        //    var RegistrationDetailsStatus = await _RegistrationDetails.UpdateRegistrationDetails(lstRegistration.UserId, lstRegistration.DeviceId, lstRegistration.ItemId, lstRegistration.IsReg, lstRegistration.Axis);
+        //    //return Json(new { Message = "Success" });
+        //    return Json(RegistrationDetailsStatus);
+        //}
 
         
-        [HttpPost]
-        [Route("RegistrationHistory")]
-        [Authorize(AuthenticationSchemes = JwtIssuerOptions.Schemes)]
-        public async Task<IActionResult> RegistrationDetails([FromForm]GetRegistered GetRegistered)
-        {
-            var registrationDetails = await _RegistrationDetails.GetDeviceDetailByUserName(GetRegistered.UserId, GetRegistered.DeviceId);
-            return Json(registrationDetails);
-            //return Json(new { RegistrationDetails = registrationDetails.Registration, DeviceLastUpdated = registrationDetails.DeviceLastUpdatedDetails, Message = "Success" });
-        }
+        //[HttpPost]
+        //[Route("RegistrationHistory")]
+        //[Authorize(AuthenticationSchemes = JwtIssuerOptions.Schemes)]
+        //public async Task<IActionResult> RegistrationDetails([FromForm]GetRegistered GetRegistered)
+        //{
+        //    var registrationDetails = await _RegistrationDetails.GetDeviceDetailByUserName(GetRegistered.UserId, GetRegistered.DeviceId);
+        //    return Json(registrationDetails);
+        //    //return Json(new { RegistrationDetails = registrationDetails.Registration, DeviceLastUpdated = registrationDetails.DeviceLastUpdatedDetails, Message = "Success" });
+        //}
 
 
         [HttpGet]
         [Route("GetUpdateRegistration")]
-        public async Task<IActionResult> GetUpdateRegistration( int UserId,int DeviceId,int ItemId,bool IsReg,string Axis)
+        public async Task<IActionResult> GetUpdateRegistration( int UserId,int DeviceId,int ItemId,bool IsReg,string Axis, int RadorlevelVal, byte radorOnOffStatus, int dbMeterLevelval, byte dbmeterOnOff, byte beepOnoff)
         {
-            var RegistrationDetailsStatus = await _RegistrationDetails.UpdateRegistrationDetails(UserId, DeviceId, ItemId, IsReg, Axis);
+            var RegistrationDetailsStatus = await _RegistrationDetails.UpdateRegistrationDetails(UserId, DeviceId, ItemId, IsReg, Axis,  RadorlevelVal,  radorOnOffStatus,  dbMeterLevelval,  dbmeterOnOff,  beepOnoff);
             return Json(RegistrationDetailsStatus);
         }
 
@@ -54,7 +54,7 @@ namespace ELOTEC.Controllers
         [Route("GetRegistrationHistory")]
         public async Task<IActionResult> GetRegistrationHistory( int UserId,int DeviceId)
         {
-            var registrationDetails = await _RegistrationDetails.GetDeviceDetailByUserName(UserId, DeviceId);
+            var registrationDetails = await _RegistrationDetails.GetRegistrationHistory(UserId, DeviceId);
             return Json(registrationDetails);
             //return Json(new { RegistrationDetails = registrationDetails.Registration, DeviceLastUpdated = registrationDetails.DeviceLastUpdatedDetails, Message = "Success" });
         }

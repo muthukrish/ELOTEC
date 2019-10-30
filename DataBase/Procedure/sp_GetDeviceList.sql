@@ -16,7 +16,7 @@ AS
 BEGIN
 	DECLARE @querystring NVARCHAR(max)
 	SET @querystring = 'select * from (
-				SELECT DeviceId
+				SELECT RegistrationId,DeviceId
 				,(
 					SELECT DeviceName
 					FROM Device_Details DD
@@ -32,7 +32,6 @@ BEGIN
 					) AS LastUpdatedUser
 				,IsActive
 			FROM Registration_Details RD) AS x' + @filterStr
-
-			
+EXEC (@querystring)
 				
 END
