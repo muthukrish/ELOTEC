@@ -44,9 +44,9 @@ namespace ELOTEC.Controllers
 
         [HttpGet]
         [Route("GetUpdateRegistration")]
-        public async Task<IActionResult> GetUpdateRegistration( int UserId,int DeviceId,int ItemId,bool IsReg,string Axis)
+        public async Task<IActionResult> GetUpdateRegistration( int UserId,int DeviceId,int ItemId,bool IsReg,string Axis, int RadorlevelVal, byte radorOnOffStatus, int dbMeterLevelval, byte dbmeterOnOff, byte beepOnoff)
         {
-            var RegistrationDetailsStatus = await _RegistrationDetails.UpdateRegistrationDetails(UserId, DeviceId, ItemId, IsReg, Axis);
+            var RegistrationDetailsStatus = await _RegistrationDetails.UpdateRegistrationDetails(UserId, DeviceId, ItemId, IsReg, Axis,  RadorlevelVal,  radorOnOffStatus,  dbMeterLevelval,  dbmeterOnOff,  beepOnoff);
             return Json(RegistrationDetailsStatus);
         }
 
@@ -54,7 +54,7 @@ namespace ELOTEC.Controllers
         [Route("GetRegistrationHistory")]
         public async Task<IActionResult> GetRegistrationHistory( int UserId,int DeviceId)
         {
-            var registrationDetails = await _RegistrationDetails.GetDeviceDetailByUserName(UserId, DeviceId);
+            var registrationDetails = await _RegistrationDetails.GetRegistrationHistory(UserId, DeviceId);
             return Json(registrationDetails);
             //return Json(new { RegistrationDetails = registrationDetails.Registration, DeviceLastUpdated = registrationDetails.DeviceLastUpdatedDetails, Message = "Success" });
         }
