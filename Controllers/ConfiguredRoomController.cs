@@ -53,10 +53,10 @@ namespace ELOTEC.Controllers
 
         [HttpGet]
         [Route("GetDeviceList")]
-        public async Task<ActionResult> GetDeviceList(DateTime fromDateVal, DateTime todateVal, string deviceName, int userId)
+        public async Task<ActionResult> GetDeviceList(string fromDateVal, string todateVal, string deviceName, int userId)
         {
             string filterStr = "";
-            filterStr = " where RegistrationId > 0 and isActive=1";
+            filterStr = " where DeviceId > 0 and isActive=1";
             if (fromDateVal != null && todateVal != null)
             {
                 filterStr = filterStr + " and ((Updated_Date >= '" + String.Format("{0:M/d/yyyy}", fromDateVal) + "' and Updated_Date <= '" + String.Format("{0:M/d/yyyy}", todateVal) + "') or Updated_Date is null)";
@@ -69,16 +69,25 @@ namespace ELOTEC.Controllers
             {
                 filterStr = filterStr + " and ((Updated_Date <= '" + String.Format("{0:M/d/yyyy}", todateVal) + "') or Updated_Date is null)";
             }
-            if (deviceName != "")
+            if (deviceName != "" && deviceName != null)
             {
-                filterStr = filterStr + " and DeviceName ='" + deviceName + "'";
+                filterStr = filterStr + " and DeviceName like '%" + deviceName + "%'";
             }
             if (userId != null && userId > 0)
             {
                 filterStr = filterStr + " and (UserId in(" + userId + "))";
             }
-            var DeviceList = await _IConfiguredRoom.GetDeviceSettingDetails(filterStr,fromDateVal, todateVal, deviceName, userId);
+            var DeviceList = await _IConfiguredRoom.GetDeviceSettingDetails(filterStr, fromDateVal, todateVal, deviceName, userId);
             return Json(DeviceList);
         }
+
+        [HttpGet]
+        [Route("GetUserList")]
+        public async Task<ActionResult> GetUserList()
+        {
+            var UserList = await _IConfiguredRoom.GetUserList();
+            return Json(UserList);
+        }
     }
+
 }

@@ -20,26 +20,26 @@ namespace ELOTEC.Controllers
         {
             this._RegistrationDetails = new RegistrationDetailsRepo();
         }
-        [HttpPost]
-        [Route("UpdateRegistration")]
-        [Authorize(AuthenticationSchemes = JwtIssuerOptions.Schemes)]
-        public async Task<IActionResult> UpdateRegistrationDetails([FromForm]Registration lstRegistration)
-        {
-            var RegistrationDetailsStatus = await _RegistrationDetails.UpdateRegistrationDetails(lstRegistration.UserId, lstRegistration.DeviceId, lstRegistration.ItemId, lstRegistration.IsReg, lstRegistration.Axis);
-            //return Json(new { Message = "Success" });
-            return Json(RegistrationDetailsStatus);
-        }
+        //[HttpPost]
+        //[Route("UpdateRegistration")]
+        //[Authorize(AuthenticationSchemes = JwtIssuerOptions.Schemes)]
+        //public async Task<IActionResult> UpdateRegistrationDetails([FromForm]Registration lstRegistration)
+        //{
+        //    var RegistrationDetailsStatus = await _RegistrationDetails.UpdateRegistrationDetails(lstRegistration.UserId, lstRegistration.DeviceId, lstRegistration.ItemId, lstRegistration.IsReg, lstRegistration.Axis);
+        //    //return Json(new { Message = "Success" });
+        //    return Json(RegistrationDetailsStatus);
+        //}
 
         
-        [HttpPost]
-        [Route("RegistrationHistory")]
-        [Authorize(AuthenticationSchemes = JwtIssuerOptions.Schemes)]
-        public async Task<IActionResult> RegistrationDetails([FromForm]GetRegistered GetRegistered)
-        {
-            var registrationDetails = await _RegistrationDetails.GetDeviceDetailByUserName(GetRegistered.UserId, GetRegistered.DeviceId);
-            return Json(registrationDetails);
-            //return Json(new { RegistrationDetails = registrationDetails.Registration, DeviceLastUpdated = registrationDetails.DeviceLastUpdatedDetails, Message = "Success" });
-        }
+        //[HttpPost]
+        //[Route("RegistrationHistory")]
+        //[Authorize(AuthenticationSchemes = JwtIssuerOptions.Schemes)]
+        //public async Task<IActionResult> RegistrationDetails([FromForm]GetRegistered GetRegistered)
+        //{
+        //    var registrationDetails = await _RegistrationDetails.GetDeviceDetailByUserName(GetRegistered.UserId, GetRegistered.DeviceId);
+        //    return Json(registrationDetails);
+        //    //return Json(new { RegistrationDetails = registrationDetails.Registration, DeviceLastUpdated = registrationDetails.DeviceLastUpdatedDetails, Message = "Success" });
+        //}
 
 
         [HttpGet]

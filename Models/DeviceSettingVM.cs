@@ -18,8 +18,6 @@ namespace ELOTEC.Models
     }
     public class DeviceInformationVM
     {
-        public int DeviceId { get; set; }
-        public string DeviceName { get; set; }
         public int UserId { get; set; }
         public int ItemId { get; set; }
         public string Item { get; set; }

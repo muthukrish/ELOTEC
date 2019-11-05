@@ -122,16 +122,15 @@ namespace ELOTEC.Access.Repositories
                         dap.SelectCommand.Parameters.AddWithValue("@UserId", userId);
                         dap.SelectCommand.Parameters.AddWithValue("@deviceId", deviceId);
                         dap.Fill(dsRegistration);
+                        List<DeviceInformationVM> DeviceInformationList = new List<DeviceInformationVM>();
                         if (dsRegistration.Tables.Count > 0)
                         {
                             _result[ResultKey.Success] = true;
                             _result[ResultKey.Message] = Message.Success;
-                            List<DeviceInformationVM> DeviceInformationList = new List<DeviceInformationVM>();
+                            
                             foreach (DataRow x in dsRegistration.Tables[0].Rows)
                             {
                                 DeviceInformationVM objCP = new DeviceInformationVM();
-                                objCP.DeviceId = Convert.ToInt32(x["DeviceId"]);
-                                objCP.DeviceName = Convert.ToString(x["DeviceName"]);
                                 objCP.UserId = Convert.ToInt32(x["UserId"]);
                                 objCP.ItemId = Convert.ToInt32(x["ItemId"]);
                                 objCP.Item = Convert.ToString(x["Item"]);
@@ -143,11 +142,37 @@ namespace ELOTEC.Access.Repositories
                                 DeviceInformationList.Add(objCP);
                             }
                             _result[ResultKey.DeviceSettingDetails] = DeviceInformationList;
+
+                            using (SqlDataAdapter sda = new SqlDataAdapter("sp_GetDeviceLastUpdatedDetails", sqlConnection))
+                            {
+                                DataSet dsDeviceDetails = new DataSet();
+                                sda.SelectCommand.CommandType = CommandType.StoredProcedure;
+                                sda.SelectCommand.Parameters.AddWithValue("@deviceId", deviceId);
+                                sda.Fill(dsDeviceDetails);
+                                if (dsDeviceDetails.Tables.Count > 0)
+                                {
+                                    foreach (DataRow dr in dsDeviceDetails.Tables[0].Rows)
+                                    {
+                                        List<DeviceLastUpdatedDetailsVM> DeviceLastUpdatedDetails = new List<DeviceLastUpdatedDetailsVM>();
+                                        foreach (DataRow x in dsDeviceDetails.Tables[0].Rows)
+                                        {
+                                            DeviceLastUpdatedDetailsVM objCP = new DeviceLastUpdatedDetailsVM();
+                                            objCP.LastUpdatedUser = Convert.ToString(dr["LastUpdatedUser"]);
+                                            objCP.Updated_Date = Convert.ToDateTime(dr["Updated_Date"]).ToString("dd MMM yyyy");
+                                            objCP.DeviceId = Convert.ToInt32(dr["DeviceId"]);
+                                            objCP.DeviceName = Convert.ToString(dr["DeviceName"]);
+                                            DeviceLastUpdatedDetails.Add(objCP);
+                                        }
+                                        _result[ResultKey.LastUpdatedInfo] = DeviceLastUpdatedDetails;
+                                    }
+                                }
+                            }
                         }
                         else
                         {
-                            _result[ResultKey.Success] = false;
-                            _result[ResultKey.Message] = "something went wrong";
+                            _result[ResultKey.Success] = true;
+                            _result[ResultKey.Message] = Message.Success;
+                            _result[ResultKey.DeviceSettingDetails] = DeviceInformationList;
                         }
                     }
                     sqlConnection.Close();

@@ -13,4 +13,9 @@ namespace ELOTEC.Models
         public DateTime? Updated_Date { get; set; }
         public byte IsRegistered { get; set; }
     }
+    public class UserListVM
+    {
+        public int UserId { get; set; }
+        public string FirstName { get; set; }
+    }
 }

@@ -39,6 +39,7 @@ BEGIN
 			,axis
 			,IsRegistered
 			,Updated_Date
+			,lastUpdatedBy
 			,IsActive
 			)
 		VALUES (
@@ -49,6 +50,7 @@ BEGIN
 			,@axis
 			,@IsReg
 			,GETDATE()
+			,@userId
 			,1
 			)
 	END

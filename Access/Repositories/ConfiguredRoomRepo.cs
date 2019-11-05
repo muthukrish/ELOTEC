@@ -20,7 +20,7 @@ namespace ELOTEC.Access.Repositories
         }
 
 
-        public async Task<ResultObject> GetDeviceSettingDetails(string filterStr, DateTime fromDateVal, DateTime todateVal, string deviceName, int userId)
+        public async Task<ResultObject> GetDeviceSettingDetails(string filterStr, string fromDateVal, string todateVal, string deviceName, int userId)
         {
             try
             {
@@ -34,11 +34,11 @@ namespace ELOTEC.Access.Repositories
                         dap.SelectCommand.CommandType = CommandType.StoredProcedure;
                         dap.SelectCommand.Parameters.AddWithValue("@filterStr", filterStr);
                         dap.Fill(dsDeviceList);
+                        List<ConfiguredRoomVM> DeviceList = new List<ConfiguredRoomVM>();
                         if (dsDeviceList.Tables.Count > 0)
                         {
                             _result[ResultKey.Success] = true;
                             _result[ResultKey.Message] = Message.Success;
-                            List<ConfiguredRoomVM> DeviceList = new List<ConfiguredRoomVM>();
                             foreach (DataRow x in dsDeviceList.Tables[0].Rows)
                             {
                                 ConfiguredRoomVM objCP = new ConfiguredRoomVM();
@@ -46,15 +46,16 @@ namespace ELOTEC.Access.Repositories
                                 objCP.DeviceName = Convert.ToString(x["DeviceName"]);
                                 objCP.LastUpdatedUser = Convert.ToString(x["LastUpdatedUser"]);
                                 objCP.Updated_Date = x["Updated_Date"] != DBNull.Value ? Convert.ToDateTime(x["Updated_Date"]) : (DateTime?)null;
-                                objCP.IsRegistered = Convert.ToByte(x["IsRegistered"]);
+                                objCP.IsRegistered = Convert.ToByte(x["RegisteredStatus"]);
                                 DeviceList.Add(objCP);
                             }
                             _result[ResultKey.DeviceSettingDetails] = DeviceList;
                         }
                         else
                         {
-                            _result[ResultKey.Success] = false;
-                            _result[ResultKey.Message] = "something went wrong";
+                            _result[ResultKey.Success] = true;
+                            _result[ResultKey.Message] = Message.Success;
+                            _result[ResultKey.DeviceSettingDetails] = DeviceList;
                         }
                     }
                     sqlConnection.Close();
@@ -63,6 +64,49 @@ namespace ELOTEC.Access.Repositories
             }
             catch (Exception ex)
             {
+                _result[ResultKey.Success] = false;
+                _result[ResultKey.Message] = ex.Message;
+                throw ex;
+            }
+        }
+
+        public async Task<ResultObject> GetUserList() {
+            try
+            {
+                using (var sqlConnection = new SqlConnection(ConnectionString))
+                {
+                    await sqlConnection.OpenAsync();
+                    using (SqlDataAdapter dap = new SqlDataAdapter("sp_GetUserList", sqlConnection))
+                    {
+                        DataSet dsUserList = new DataSet();
+                        dap.SelectCommand.CommandType = CommandType.StoredProcedure;
+                        dap.Fill(dsUserList);
+                        List<UserListVM> UserList = new List<UserListVM>();
+                        if (dsUserList.Tables[0].Rows.Count > 0)
+                        {
+                            _result[ResultKey.Success] = true;
+                            _result[ResultKey.Message] = Message.Success;
+                            foreach (DataRow x in dsUserList.Tables[0].Rows)
+                            {
+                                UserListVM objCP = new UserListVM();
+                                objCP.UserId = Convert.ToInt32(x["UserId"]);
+                                objCP.FirstName = Convert.ToString(x["FirstName"]);
+                                UserList.Add(objCP);
+                            }
+                            _result[ResultKey.UserList] = UserList;
+                        }
+                        else
+                        {
+                            _result[ResultKey.Success] = true;
+                            _result[ResultKey.Message] = Message.Success;
+                            _result[ResultKey.UserList] = UserList;
+                        }
+                    }
+                    sqlConnection.Close();
+                }
+                return _result;
+            }
+            catch (Exception ex) {
                 _result[ResultKey.Success] = false;
                 _result[ResultKey.Message] = ex.Message;
                 throw ex;

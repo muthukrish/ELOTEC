@@ -33,11 +33,12 @@ namespace ELOTEC.Access.Repositories
                         dap.SelectCommand.Parameters.AddWithValue("@UserId", userId);
                         dap.SelectCommand.Parameters.AddWithValue("@deviceId", deviceId);
                         dap.Fill(dsCustomItem);
-                        if (dsCustomItem.Tables.Count > 0)
+                        List<CustomItemVM> CustomItem = new List<CustomItemVM>();
+                        if (dsCustomItem.Tables[0].Rows.Count > 0)
                         {
                             _result[ResultKey.Success] = true;
                             _result[ResultKey.Message] = Message.Success;
-                            List<CustomItemVM> CustomItem = new List<CustomItemVM>();
+                          
                             foreach (DataRow x in dsCustomItem.Tables[0].Rows)
                             {
                                 CustomItemVM objCP = new CustomItemVM();
@@ -53,8 +54,9 @@ namespace ELOTEC.Access.Repositories
                         }
                         else
                         {
-                            _result[ResultKey.Success] = false;
-                            _result[ResultKey.Message] = "Something went wrong";
+                            _result[ResultKey.Success] = true;
+                            _result[ResultKey.Message] = Message.Success;
+                            _result[ResultKey.CustomItemList] = CustomItem;
                         }
                     }
                     sqlConnection.Close();
@@ -63,6 +65,8 @@ namespace ELOTEC.Access.Repositories
             }
             catch (Exception ex)
             {
+                _result[ResultKey.Success] = false;
+                _result[ResultKey.Message] = ex.Message;
                 throw ex;
             }
         }

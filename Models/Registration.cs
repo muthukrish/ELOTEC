@@ -27,6 +27,9 @@ namespace ELOTEC.Models
     {
         public string LastUpdatedUser { get; set; }
         public string Updated_Date { get; set; }
+        public int DeviceId { get; set; }
+        public string DeviceName { get; set; }
+
     }
 
     public class Registration

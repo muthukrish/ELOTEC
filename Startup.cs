@@ -80,8 +80,10 @@ namespace ELOTEC
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "ELOTEC API");
+                //c.InjectStylesheet("/css/swagger.min.css");
+                //c.RoutePrefix = "help";
             });
-
+           
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

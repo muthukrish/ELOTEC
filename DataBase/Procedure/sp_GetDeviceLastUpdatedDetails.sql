@@ -17,6 +17,8 @@ SELECT TOP 1 Updated_Date
 		FROM Users U
 		WHERE UserId = RD.lastUpdatedBy and IsActive=1
 		) AS LastUpdatedUser
+		,DeviceId
+		,(SELECT DeviceName FROM Device_Details DD WHERE DD.DeviceId = RD.DeviceId) AS DeviceName
 FROM Registration_Details RD
 WHERE DeviceId = @deviceId and IsActive=1
 ORDER BY Updated_Date DESC

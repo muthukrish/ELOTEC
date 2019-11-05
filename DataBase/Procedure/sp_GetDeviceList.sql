@@ -16,23 +16,22 @@ AS
 BEGIN
 	DECLARE @querystring NVARCHAR(max)
 	SET @querystring = 'select * from (
-				SELECT DeviceId
-				,(
-					SELECT DeviceName
-					FROM Device_Details DD
-					WHERE DD.DeviceId = RD.DeviceId
-					) AS DeviceName
-				,UserId
-				,IsRegistered
-				,Convert(DATE, Updated_Date) AS Updated_Date
-				,(
-					SELECT FirstName
-					FROM Users U
-					WHERE UserId = RD.lastUpdatedBy
-					) AS LastUpdatedUser
-				,IsActive
-			FROM Registration_Details RD) AS x' + @filterStr
-
-			
+			 SELECT DeviceId
+			 ,DeviceName
+			,IsActive
+			,(select max(Updated_Date) from Registration_Details where DeviceId=DD.DeviceId) As Updated_Date
+			,(select TOP 1 UserId from Registration_Details where Updated_Date= (select max(Updated_Date) from Registration_Details where DeviceId=DD.DeviceId) and DeviceId=DD.DeviceId and IsActive=1) AS UserId
+			,(
+			SELECT FirstName
+			FROM Users U
+			WHERE UserId = (select TOP 1 UserId from Registration_Details where Updated_Date= (select max(Updated_Date) from Registration_Details where DeviceId=DD.DeviceId) and DeviceId=DD.DeviceId and IsActive=1)
+			) AS LastUpdatedUser
+			,CASE when (select count(*) from Registration_Details where IsRegistered=0 and IsActive=1 and DeviceId=DD.DeviceId ) > 0
+			THEN 0
+			ELSE 1
+			END AS RegisteredStatus
+  from Device_Details DD
+  ) AS x' + @filterStr
+		EXEC (@querystring)	
 				
 END

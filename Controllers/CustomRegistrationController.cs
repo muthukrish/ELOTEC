@@ -56,7 +56,7 @@ namespace ELOTEC.Controllers
         [HttpGet]
         public async Task<ActionResult> GetCustomItemlist(int userId, int deviceId)
         {
-            var CustomItemList = _ICustomRegiatration.GetCustomItemlist(userId, deviceId);
+            var CustomItemList = await _ICustomRegiatration.GetCustomItemlist(userId, deviceId);
             return Json(CustomItemList);
         }
         [Route("UpdateCustomItem")]
