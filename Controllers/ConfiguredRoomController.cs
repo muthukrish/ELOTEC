@@ -53,7 +53,7 @@ namespace ELOTEC.Controllers
 
         [HttpGet]
         [Route("GetDeviceList")]
-        public async Task<ActionResult> GetDeviceList(string fromDateVal, string todateVal, string deviceName, int userId)
+        public async Task<ActionResult> GetDeviceList(string fromDateVal, string todateVal, string deviceName, int userId,int Page,int Size)
         {
             string filterStr = "";
             filterStr = " where DeviceId > 0 and isActive=1";
@@ -77,7 +77,7 @@ namespace ELOTEC.Controllers
             {
                 filterStr = filterStr + " and (UserId in(" + userId + "))";
             }
-            var DeviceList = await _IConfiguredRoom.GetDeviceSettingDetails(filterStr, fromDateVal, todateVal, deviceName, userId);
+            var DeviceList = await _IConfiguredRoom.GetDeviceSettingDetails(filterStr, fromDateVal, todateVal, deviceName, userId, Page, Size);
             return Json(DeviceList);
         }
 

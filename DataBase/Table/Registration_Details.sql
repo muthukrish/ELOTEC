@@ -1,7 +1,7 @@
 *************************************************************************
 Name			: Muthukrishnan
 Created Date	: 25-09-2019
-Updated Date	:25-09-2019
+Updated Date	: 05-11-2019
 
 **************************************************************************/
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME='Registration_Details')

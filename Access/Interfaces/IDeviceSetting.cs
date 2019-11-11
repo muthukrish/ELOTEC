@@ -8,7 +8,7 @@ namespace ELOTEC.Access.Interfaces
 {
     interface IDeviceSetting
     {
-        Task<ResultObject> UpdateDeviceSetting(int userId, int deviceId, int RadorlevelVal, byte radorOnOffStatus, int dbMeterLevelval, byte dbmeterOnOff, byte beepOnoff);
+        Task<ResultObject> UpdateDeviceSetting(int userId, int deviceId, int radorCoverageVal, byte radorCoverageOnOff, int radorSensitivityLevelval, byte radorSensitivityOnOff, byte beepOnoff, byte RadorLEDOnoff);
         Task<ResultObject> GetDeviceSettingDetails(int userId, int deviceId);
         Task<ResultObject> GetDeviceDetails(int userId, int deviceId);
     }

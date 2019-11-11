@@ -10,11 +10,14 @@ namespace ELOTEC.Models
         public int DeviceId { get; set; }
         public string DeviceName { get; set; }
         public byte IsActive { get; set; }
-        public int RadorAdjustLevel { get; set; }
-        public byte RadorAdjustStatus { get; set; }
-        public int DbMeterAdjustLevel { get; set; }
-        public byte DbMeterAdjustStatus { get; set; }
+        public int RadorCoverageArea { get; set; }
+        public byte RadorCoverageStatus { get; set; }
+        public int RadorSensitivityLevel { get; set; }
+        public byte RadorSensitivityStatus { get; set; }
         public byte BeepStatus { get; set; }
+        public byte RadorLEDIndicatorStatus { get; set; }
+        public string IPAddress { get; set; }
+        public string SoftwareVersion { get; set; }
     }
     public class DeviceInformationVM
     {

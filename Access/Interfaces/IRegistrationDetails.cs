@@ -9,7 +9,7 @@ namespace ELOTEC.Access.Interfaces
 {
     interface IRegistrationDetails
     {
-        Task<ResultObject> UpdateRegistrationDetails(int userId, int deviceId, int itemId, bool IsReg, string access, int RadorlevelVal, byte radorOnOffStatus, int dbMeterLevelval, byte dbmeterOnOff, byte beepOnoff);
+        Task<ResultObject> UpdateRegistrationDetails(int UserId, int DeviceId, int ItemId, bool IsReg, string Axis);
         Task<ResultObject> GetRegistrationHistory(int userId, int deviceId);
     }
 }

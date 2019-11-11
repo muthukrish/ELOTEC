@@ -14,6 +14,6 @@ CREATE PROCEDURE [dbo].[sp_GetDeviceSettingDetails] (
 	)
 AS
 BEGIN
-	SELECT DeviceId,DeviceName,IsActive,RadorAdjustLevel,RadorAdjustStatus,DbMeterAdjustLevel,
-	DbMeterAdjustStatus,BeepStatus FROM Device_Details WHERE DeviceId=@deviceId AND IsActive=1
+	SELECT DeviceId,DeviceName,IsActive,RadorCoverageArea,RadorCoverageStatus,RadorSensitivityLevel,
+	RadorSensitivityStatus,BeepStatus,RadorLEDIndicatorStatus,IpAddress,SoftwareVersion FROM Device_Details WHERE DeviceId=@deviceId AND IsActive=1
 END

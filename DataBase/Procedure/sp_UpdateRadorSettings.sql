@@ -12,15 +12,16 @@ GO
 create procedure sp_UpdateRadorSettings(
 @userId int
 ,@deviceId int
-,@radorlevelVal int
-,@radorOnOffStatus bit
-,@dbMeterLevelval int
-,@dbmeterOnOff bit
+,@radorCoverageVal int
+,@radorCoverageOnOffStatus bit
+,@radorSensitivityLevelval int
+,@radorSensitivityOnOff bit
 ,@beepOnoff bit
+,@radorIndicatorStatus bit
 )
 AS
 
 BEGIN
-	UPDATE Device_Details set RadorAdjustLevel=@radorlevelVal,
-	RadorAdjustStatus=@radorOnOffStatus,DbMeterAdjustLevel=@dbMeterLevelval,DbMeterAdjustStatus=@dbmeterOnOff,BeepStatus=@beepOnoff where DeviceId=@deviceId
+	UPDATE Device_Details set RadorCoverageArea=@radorCoverageVal,
+	RadorCoverageStatus=@radorCoverageOnOffStatus,RadorSensitivityLevel=@radorSensitivityLevelval,RadorSensitivityStatus=@radorSensitivityOnOff,BeepStatus=@beepOnoff,RadorLEDIndicatorStatus=@radorIndicatorStatus where DeviceId=@deviceId
 END

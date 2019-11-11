@@ -11,10 +11,14 @@ GO
 
 CREATE PROCEDURE [dbo].[sp_GetDeviceList] (
 	@filterStr nvarchar(max)
+	,@Page int 
+	,@Size int 
 	)
 AS
 BEGIN
 	DECLARE @querystring NVARCHAR(max)
+	DECLARE @offset INT
+	SET @offset = (@page - 1) * @size;
 	SET @querystring = 'select * from (
 			 SELECT DeviceId
 			 ,DeviceName
@@ -30,8 +34,9 @@ BEGIN
 			THEN 0
 			ELSE 1
 			END AS RegisteredStatus
+			,ROW_NUMBER() OVER (order by DeviceId asc) AS RowNum
   from Device_Details DD
-  ) AS x' + @filterStr
+  ) AS x' + @filterStr + ' and RowNum BETWEEN ' + CONVERT(NVARCHAR(12), @offSET + 1) + 'AND ' + CONVERT(NVARCHAR(12), (@offset + @size)) 
 		EXEC (@querystring)	
 				
 END

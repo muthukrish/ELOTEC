@@ -20,7 +20,7 @@ namespace ELOTEC.Access.Repositories
         }
 
 
-        public async Task<ResultObject> GetDeviceSettingDetails(string filterStr, string fromDateVal, string todateVal, string deviceName, int userId)
+        public async Task<ResultObject> GetDeviceSettingDetails(string filterStr, string fromDateVal, string todateVal, string deviceName, int userId, int Page, int Size)
         {
             try
             {
@@ -33,6 +33,8 @@ namespace ELOTEC.Access.Repositories
                         DataSet dsDeviceList = new DataSet();
                         dap.SelectCommand.CommandType = CommandType.StoredProcedure;
                         dap.SelectCommand.Parameters.AddWithValue("@filterStr", filterStr);
+                        dap.SelectCommand.Parameters.AddWithValue("@Page", Page);
+                        dap.SelectCommand.Parameters.AddWithValue("@Size", Size);
                         dap.Fill(dsDeviceList);
                         List<ConfiguredRoomVM> DeviceList = new List<ConfiguredRoomVM>();
                         if (dsDeviceList.Tables.Count > 0)

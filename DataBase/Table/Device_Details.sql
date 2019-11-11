@@ -1,7 +1,7 @@
 *************************************************************************
 Name			: Muthukrishnan
 Created Date	: 25-09-2019
-Updated Date	:25-09-2019
+Updated Date	:05-11-2019
 
 **************************************************************************/
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME='Device_Details')
@@ -11,11 +11,14 @@ CREATE TABLE [dbo].[Device_Details](
 	[DeviceName] [nvarchar](50) NOT NULL,
 	[RoomNoId] [bigint] NOT NULL,
 	[IsActive] [bit] NOT NULL,
-	[RadorAdjustLevel] [int] NOT NULL,
-	[RadorAdjustStatus] [bit] NOT NULL,
-	[DbMeterAdjustLevel] [int] NOT NULL,
-	[DbMeterAdjustStatus] [bit] NOT NULL,
+	[RadorCoverageArea] [int] NOT NULL,
+	[RadorCoverageStatus] [bit] NOT NULL,
+	[RadorSensitivityLevel] [int] NOT NULL,
+	[RadorSensitivityStatus] [bit] NOT NULL,
 	[BeepStatus] [bit] NOT NULL,
+	[RadorLEDIndicatorStatus] [bit] NOT NULL,
+	[IpAddress] [nvarchar](50) NOT NULL,
+	[SoftwareVersion] [nvarchar](50) NOT NULL,
  CONSTRAINT [PK_Device_Details] PRIMARY KEY CLUSTERED 
 (
 	[DeviceId] ASC

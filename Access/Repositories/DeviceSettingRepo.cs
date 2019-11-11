@@ -20,7 +20,7 @@ namespace ELOTEC.Access.Repositories
         }
 
 
-        public async Task<ResultObject> UpdateDeviceSetting(int userId, int deviceId, int radorlevelVal, byte radorOnOffStatus, int dbMeterLevelval, byte dbmeterOnOff, byte beepOnoff) {
+        public async Task<ResultObject> UpdateDeviceSetting(int userId, int deviceId, int radorCoverageVal, byte radorCoverageOnOff, int radorSensitivityLevelval, byte radorSensitivityOnOff, byte beepOnoff, byte RadorLEDOnoff) {
             try
             {
                 using (var con = new SqlConnection(ConnectionString)) {
@@ -29,11 +29,12 @@ namespace ELOTEC.Access.Repositories
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@UserId", userId);
                         cmd.Parameters.AddWithValue("@deviceId", deviceId);
-                        cmd.Parameters.AddWithValue("@radorlevelVal", radorlevelVal);
-                        cmd.Parameters.AddWithValue("@radorOnOffStatus", radorOnOffStatus);
-                        cmd.Parameters.AddWithValue("@dbMeterLevelval", dbMeterLevelval);
-                        cmd.Parameters.AddWithValue("@dbmeterOnOff", dbmeterOnOff);
+                        cmd.Parameters.AddWithValue("@radorCoverageVal", radorCoverageVal);
+                        cmd.Parameters.AddWithValue("@radorCoverageOnOffStatus", radorCoverageOnOff);
+                        cmd.Parameters.AddWithValue("@radorSensitivityLevelval", radorSensitivityLevelval);
+                        cmd.Parameters.AddWithValue("@radorSensitivityOnOff", radorSensitivityOnOff);
                         cmd.Parameters.AddWithValue("@beepOnoff", beepOnoff);
+                        cmd.Parameters.AddWithValue("@radorIndicatorStatus", RadorLEDOnoff);
                         if (cmd.ExecuteNonQuery() == 0)
                         {
                             _result[ResultKey.Success] = false;
@@ -81,11 +82,12 @@ namespace ELOTEC.Access.Repositories
                                 objCP.DeviceId = Convert.ToInt32(x["DeviceId"]);
                                 objCP.DeviceName = Convert.ToString(x["DeviceName"]);
                                 objCP.IsActive = Convert.ToByte(x["IsActive"]);
-                                objCP.RadorAdjustLevel = Convert.ToInt32(x["RadorAdjustLevel"]);
-                                objCP.RadorAdjustStatus = Convert.ToByte(x["RadorAdjustStatus"]);
-                                objCP.DbMeterAdjustLevel = Convert.ToInt32(x["DbMeterAdjustLevel"]);
-                                objCP.DbMeterAdjustStatus = Convert.ToByte(x["DbMeterAdjustStatus"]);
+                                objCP.RadorCoverageArea = Convert.ToInt32(x["RadorCoverageArea"]);
+                                objCP.RadorCoverageStatus = Convert.ToByte(x["RadorCoverageStatus"]);
+                                objCP.RadorSensitivityLevel = Convert.ToInt32(x["RadorSensitivityLevel"]);
+                                objCP.RadorSensitivityStatus = Convert.ToByte(x["RadorSensitivityStatus"]);
                                 objCP.BeepStatus = Convert.ToByte(x["BeepStatus"]);
+                                objCP.RadorLEDIndicatorStatus = Convert.ToByte(x["RadorLEDIndicatorStatus"]);
                                 DeviceSettings.Add(objCP);
                             }
                             _result[ResultKey.DeviceSettingDetails] = DeviceSettings;
@@ -141,7 +143,7 @@ namespace ELOTEC.Access.Repositories
                                 objCP.IsActive = Convert.ToByte(x["IsActive"]);
                                 DeviceInformationList.Add(objCP);
                             }
-                            _result[ResultKey.DeviceSettingDetails] = DeviceInformationList;
+                            _result[ResultKey.RegistrationDetails] = DeviceInformationList;
 
                             using (SqlDataAdapter sda = new SqlDataAdapter("sp_GetDeviceLastUpdatedDetails", sqlConnection))
                             {
@@ -165,6 +167,37 @@ namespace ELOTEC.Access.Repositories
                                         }
                                         _result[ResultKey.LastUpdatedInfo] = DeviceLastUpdatedDetails;
                                     }
+                                }
+                            }
+                            using (SqlDataAdapter sda = new SqlDataAdapter("sp_GetDeviceSettingDetails", sqlConnection))
+                            {
+                                DataSet dsDeviceSetting = new DataSet();
+                                sda.SelectCommand.CommandType = CommandType.StoredProcedure;
+                                sda.SelectCommand.Parameters.AddWithValue("@UserId", userId);
+                                sda.SelectCommand.Parameters.AddWithValue("@deviceId", deviceId);
+                                sda.Fill(dsDeviceSetting);
+                                if (dsDeviceSetting.Tables.Count > 0)
+                                {
+                                    _result[ResultKey.Success] = true;
+                                    _result[ResultKey.Message] = Message.Success;
+                                    List<DeviceSettingVM> DeviceSettings = new List<DeviceSettingVM>();
+                                    foreach (DataRow x in dsDeviceSetting.Tables[0].Rows)
+                                    {
+                                        DeviceSettingVM objCP = new DeviceSettingVM();
+                                        objCP.DeviceId = Convert.ToInt32(x["DeviceId"]);
+                                        objCP.DeviceName = Convert.ToString(x["DeviceName"]);
+                                        objCP.IsActive = Convert.ToByte(x["IsActive"]);
+                                        objCP.RadorCoverageArea = Convert.ToInt32(x["RadorCoverageArea"]);
+                                        objCP.RadorCoverageStatus = Convert.ToByte(x["RadorCoverageStatus"]);
+                                        objCP.RadorSensitivityLevel = Convert.ToInt32(x["RadorSensitivityLevel"]);
+                                        objCP.RadorSensitivityStatus = Convert.ToByte(x["RadorSensitivityStatus"]);
+                                        objCP.BeepStatus = Convert.ToByte(x["BeepStatus"]);
+                                        objCP.RadorLEDIndicatorStatus = Convert.ToByte(x["RadorLEDIndicatorStatus"]);
+                                        objCP.IPAddress = Convert.ToString(x["IpAddress"]);
+                                        objCP.SoftwareVersion = Convert.ToString(x["SoftwareVersion"]);
+                                        DeviceSettings.Add(objCP);
+                                    }
+                                    _result[ResultKey.DeviceSettingDetails] = DeviceSettings;
                                 }
                             }
                         }

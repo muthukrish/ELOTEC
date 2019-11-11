@@ -8,7 +8,7 @@ namespace ELOTEC.Access.Interfaces
 {
     interface IConfiguredRoom
     {
-        Task<ResultObject> GetDeviceSettingDetails(string filterStr, string fromDateVal, string todateVal, string deviceName, int userId);
+        Task<ResultObject> GetDeviceSettingDetails(string filterStr, string fromDateVal, string todateVal, string deviceName, int userId, int Page, int Size);
         Task<ResultObject> GetUserList();
 
     }
