@@ -45,9 +45,9 @@ namespace ELOTEC.Access.Repositories
                                 objCP.ItemId = Convert.ToInt32(x["ItemId"]);
                                 objCP.ItemName = Convert.ToString(x["ItemName"]);
                                 objCP.IsActive = Convert.ToByte(x["IsActive"]);
-                                objCP.iscustom = Convert.ToByte(x["iscustom"]);
-                                objCP.RegStatus = Convert.ToByte(x["RegStatus"]);
-                                objCP.RegistrationId = x["RegistrationId"] != DBNull.Value ? Convert.ToInt32(x["RegistrationId"]) : (int?)null;
+                                //objCP.iscustom = Convert.ToByte(x["iscustom"]);
+                                //objCP.IsRegistered = Convert.ToByte(x["RegStatus"]);
+                                //objCP.RegistrationId = x["RegistrationId"] != DBNull.Value ? Convert.ToInt32(x["RegistrationId"]) : (int?)null;
                                 CustomItem.Add(objCP);
                             }
                             _result[ResultKey.CustomItemList] = CustomItem;

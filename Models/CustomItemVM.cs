@@ -10,8 +10,8 @@ namespace ELOTEC.Models
         public int ItemId { get; set; }
         public string ItemName { get; set; }
         public byte IsActive { get; set; }
-        public byte iscustom { get; set; }
-        public byte RegStatus { get; set; }
-        public int? RegistrationId { get; set; }
+        //public byte iscustom { get; set; }
+        //public byte IsRegistered { get; set; }
+        //public int? RegistrationId { get; set; }
     }
 }

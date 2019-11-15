@@ -53,21 +53,21 @@ namespace ELOTEC.Controllers
 
         [HttpGet]
         [Route("GetDeviceList")]
-        public async Task<ActionResult> GetDeviceList(string fromDateVal, string todateVal, string deviceName, int userId,int Page,int Size)
+        public async Task<ActionResult> GetDeviceList(string fromDateVal, string toDateVal, string deviceName, int userId,int page,int size)
         {
             string filterStr = "";
             filterStr = " where DeviceId > 0 and isActive=1";
-            if (fromDateVal != null && todateVal != null)
+            if (fromDateVal != null && toDateVal != null)
             {
-                filterStr = filterStr + " and ((Updated_Date >= '" + String.Format("{0:M/d/yyyy}", fromDateVal) + "' and Updated_Date <= '" + String.Format("{0:M/d/yyyy}", todateVal) + "') or Updated_Date is null)";
+                filterStr = filterStr + " and ((Updated_Date >= '" + String.Format("{0:M/d/yyyy}", fromDateVal) + "' and Updated_Date <= '" + String.Format("{0:M/d/yyyy}", toDateVal) + "') or Updated_Date is null)";
             }
             else if (fromDateVal != null)
             {
                 filterStr = filterStr + " and ((Updated_Date >= '" + String.Format("{0:M/d/yyyy}", fromDateVal) + "') or Updated_Date is null)";
             }
-            else if (todateVal != null)
+            else if (toDateVal != null)
             {
-                filterStr = filterStr + " and ((Updated_Date <= '" + String.Format("{0:M/d/yyyy}", todateVal) + "') or Updated_Date is null)";
+                filterStr = filterStr + " and ((Updated_Date <= '" + String.Format("{0:M/d/yyyy}", toDateVal) + "') or Updated_Date is null)";
             }
             if (deviceName != "" && deviceName != null)
             {
@@ -77,7 +77,7 @@ namespace ELOTEC.Controllers
             {
                 filterStr = filterStr + " and (UserId in(" + userId + "))";
             }
-            var DeviceList = await _IConfiguredRoom.GetDeviceSettingDetails(filterStr, fromDateVal, todateVal, deviceName, userId, Page, Size);
+            var DeviceList = await _IConfiguredRoom.GetDeviceSettingDetails(filterStr, fromDateVal, toDateVal, deviceName, userId, page, size);
             return Json(DeviceList);
         }
 

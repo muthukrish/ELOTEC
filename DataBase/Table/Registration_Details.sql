@@ -17,6 +17,7 @@ CREATE TABLE [dbo].[Registration_Details](
 	[Updated_Date] [datetime] NOT NULL,
 	[lastUpdatedBy] [int] NOT NULL,
 	[IsActive] [bit] NOT NULL,
+	[IsCustom] [bit] NOT NULL,
  CONSTRAINT [PK_Registration_Details] PRIMARY KEY CLUSTERED 
 (
 	[RegistrationId] ASC

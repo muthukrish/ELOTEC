@@ -20,7 +20,7 @@ namespace ELOTEC.Models
         public int ItemId { get; set; }
         public string ItemName { get; set; }
         public string Axis { get; set; }
-        public byte IsReg { get; set; }
+        public byte IsRegistered { get; set; }
         public byte IsActive { get; set; }
     }
     public class DeviceLastUpdatedDetailsVM
@@ -37,7 +37,7 @@ namespace ELOTEC.Models
         public int UserId { get; set; }
         public int DeviceId { get; set; }
         public int ItemId { get; set; }
-        public bool IsReg { get; set; }
+        public bool IsRegistered { get; set; }
         public string Axis { get; set; }
     }
     public class GetRegistered

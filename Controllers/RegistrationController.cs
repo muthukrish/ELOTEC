@@ -44,17 +44,17 @@ namespace ELOTEC.Controllers
 
         [HttpGet]
         [Route("GetUpdateRegistration")]
-        public async Task<IActionResult> GetUpdateRegistration( int UserId,int DeviceId,int ItemId,bool IsReg,string Axis)
+        public async Task<IActionResult> GetUpdateRegistration( int userId,int deviceId,int itemId,bool isReg,string axis)
         {
-            var RegistrationDetailsStatus = await _RegistrationDetails.UpdateRegistrationDetails(UserId, DeviceId, ItemId, IsReg, Axis);
+            var RegistrationDetailsStatus = await _RegistrationDetails.UpdateRegistrationDetails(userId, deviceId, itemId, isReg, axis);
             return Json(RegistrationDetailsStatus);
         }
 
         [HttpGet]
         [Route("GetRegistrationHistory")]
-        public async Task<IActionResult> GetRegistrationHistory( int UserId,int DeviceId)
+        public async Task<IActionResult> GetRegistrationHistory( int userId,int deviceId)
         {
-            var registrationDetails = await _RegistrationDetails.GetRegistrationHistory(UserId, DeviceId);
+            var registrationDetails = await _RegistrationDetails.GetRegistrationHistory(userId, deviceId);
             return Json(registrationDetails);
             //return Json(new { RegistrationDetails = registrationDetails.Registration, DeviceLastUpdated = registrationDetails.DeviceLastUpdatedDetails, Message = "Success" });
         }

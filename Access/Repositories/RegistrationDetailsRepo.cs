@@ -109,7 +109,7 @@ namespace ELOTEC.Access.Repositories
                                 objCP.ItemId = Convert.ToInt32(x["ItemId"]);
                                 objCP.ItemName = Convert.ToString(x["Item"]);
                                 objCP.Axis = Convert.ToString(x["Axis"]);
-                                objCP.IsReg = Convert.ToByte(x["IsRegistered"]);
+                                objCP.IsRegistered = Convert.ToByte(x["IsRegistered"]);
                                 objCP.IsActive = Convert.ToByte(x["IsActive"]);
                                 Registration.Add(objCP);
                             }

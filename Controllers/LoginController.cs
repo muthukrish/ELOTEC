@@ -49,11 +49,11 @@
         [HttpGet]
         [Route("GetLogin")]
         // [Route(Routes.Login)]
-        public async Task<IActionResult> CheckLogincredentials(string UserName, string PassWord)
+        public async Task<IActionResult> CheckLogincredentials(string userName, string passWord)
         {
             try
             {
-                var loginResponse = await _loginRepo.LoginCheck(UserName, PassWord);
+                var loginResponse = await _loginRepo.LoginCheck(userName, passWord);
                 return Json(loginResponse);
             }
             catch (Exception ex)

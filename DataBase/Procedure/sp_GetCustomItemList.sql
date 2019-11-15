@@ -10,18 +10,15 @@ CREATE PROCEDURE sp_GetCustomItemList
 )
 AS
 BEGIN
-select ITMD.ItemId
-,ITMD.ItemName
-,ITMD.IsActive
-,ITMD.iscustom
-,CASE 
-		WHEN RD.RegistrationId is not null
-			THEN 1
-		ELSE 0
-		END AS RegStatus
-,RD.RegistrationId
+ select RD.ItemId
+,(
+					SELECT ItemName
+					FROM Item_Details ItmD
+					WHERE ItmD.ItemId = RD.ItemId
+					) AS ItemName
+,RD.IsCustom AS IsActive
+ from Registration_Details RD where RD.DeviceId=@deviceId AND RD.IsActive=1
+ order by ItemId asc
 
- from Item_Details ITMD 
- LEFT JOIN Registration_Details RD ON ITMD.ItemId=RD.ItemId and RD.DeviceId=@deviceId AND RD.IsActive=1
- where ITMD.iscustom=1 and ITMD.IsActive=1
+
 END

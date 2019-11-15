@@ -47,7 +47,8 @@ namespace ELOTEC.Access.Repositories
                                 objCP.DeviceId = Convert.ToInt32(x["DeviceId"]);
                                 objCP.DeviceName = Convert.ToString(x["DeviceName"]);
                                 objCP.LastUpdatedUser = Convert.ToString(x["LastUpdatedUser"]);
-                                objCP.Updated_Date = x["Updated_Date"] != DBNull.Value ? Convert.ToDateTime(x["Updated_Date"]) : (DateTime?)null;
+                                //objCP.Updated_Date = x["Updated_Date"] != DBNull.Value ? Convert.ToDateTime(x["Updated_Date"]) : (DateTime?)null;
+                                objCP.Updated_Date = Convert.ToDateTime(x["Updated_Date"]).ToString("dd MMM yyyy");
                                 objCP.IsRegistered = Convert.ToByte(x["RegisteredStatus"]);
                                 DeviceList.Add(objCP);
                             }

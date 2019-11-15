@@ -57,8 +57,8 @@ namespace ELOTEC.Controllers
 
         [HttpGet]
         [Route("UpdateDeviceSetting")]
-        public async Task<ActionResult> UpdateDeviceSetting(int userId, int deviceId,int radorCoverageVal, byte radorCoverageOnOff, int radorSensitivityLevelval, byte radorSensitivityOnOff, byte beepOnoff,byte RadorLEDOnoff) {
-            var UpdatedStatus = await _IDeviceSetting.UpdateDeviceSetting(userId, deviceId, radorCoverageVal, radorCoverageOnOff, radorSensitivityLevelval, radorSensitivityOnOff, beepOnoff, RadorLEDOnoff);
+        public async Task<ActionResult> UpdateDeviceSetting(int userId, int deviceId,int radorCoverageVal, byte radorCoverageOnOff, int radorSensitivityLevelval, byte radorSensitivityOnOff, byte beepOnoff,byte radorLEDOnoff) {
+            var UpdatedStatus = await _IDeviceSetting.UpdateDeviceSetting(userId, deviceId, radorCoverageVal, radorCoverageOnOff, radorSensitivityLevelval, radorSensitivityOnOff, beepOnoff, radorLEDOnoff);
             return Json(UpdatedStatus);
         }
 

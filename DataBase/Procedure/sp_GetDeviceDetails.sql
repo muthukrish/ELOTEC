@@ -45,6 +45,7 @@ BEGIN
 						,Updated_Date
 						,lastUpdatedBy
 						,IsActive
+						,IsCustom
 						)
 					VALUES (
 						@deviceId
@@ -56,6 +57,7 @@ BEGIN
 						,GETDATE()
 						,@UserId
 						,1
+						,case when(@ItemId  = 1 OR @ItemId=2 OR @ItemId=3 OR @ItemId=4) then 1 else 0 end
 						)
 				END
 
@@ -90,10 +92,15 @@ BEGIN
 					FROM Users U
 					WHERE UserId = RD.lastUpdatedBy
 					) AS LastUpdatedUser
-				,IsActive
+					,RD.IsCustom As IsActive
+				--,(
+				--SELECT IsCustom
+				--FROM Item_Details ItmD
+				--WHERE ItmD.ItemId = RD.ItemId
+				--) AS IsActive
 			FROM Registration_Details RD
 			WHERE DeviceId = @deviceId
-				AND IsActive = 1
+				AND IsActive = 1 order by ItemId asc
 
 	END
 END
