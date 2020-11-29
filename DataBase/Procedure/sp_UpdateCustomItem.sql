@@ -1,16 +1,26 @@
-IF EXISTS (SELECT * FROM SYSOBJECTS WHERE NAME='sp_UpdateCustomItem')
-	BEGIN
-		DROP PROCEDURE sp_UpdateCustomItem
-	END
-GO
-CREATE PROCEDURE sp_UpdateCustomItem
-(
-@UserId INT
-,@deviceId INT
-,@itemId INT
-,@RegStatus bit
-)
-AS
+/*************************
+Name		: Muthukrishnan
+
+************************/
+do $$
+begin
+	if exists (select * from pg_proc where proname='sp_updatecustomitem') 
+	then
+		DROP PROCEDURE public.sp_updatecustomitem(integer, integer, boolean);
+	end if;
+end$$;
+
+CREATE OR REPLACE PROCEDURE public.sp_updatecustomitem(
+	rid integer,
+	riid integer,
+	isactiveval boolean)
+LANGUAGE 'plpgsql'
+
+AS $BODY$
 BEGIN
-update Registration_Details set IsCustom=@RegStatus where DeviceId=@deviceId AND ItemId=@itemId
-END
+Update roomobjects set isactive=isactiveVal where roomid=rid and roomitemid=riid;
+	
+    COMMIT;
+END;
+$BODY$;
+
