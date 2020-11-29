@@ -8,6 +8,8 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using ELOTEC.Infrastructure.Constants;
+using Npgsql;
+using NpgsqlTypes;
 
 namespace ELOTEC.Access.Repositories
 {
@@ -22,39 +24,50 @@ namespace ELOTEC.Access.Repositories
         {
             try
             {
-                using (var con = new SqlConnection(ConnectionString))
+                using (var sqlcon = new NpgsqlConnection(ConnectionString))
                 {
-                    await con.OpenAsync();
-                    using (var cmd = new SqlCommand("sp_CheckLogin", con))
+                    sqlcon.Open();
+                    using (var cmd = new NpgsqlCommand("fn_CheckLogin", sqlcon))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@userName", userName);
-                        cmd.Parameters.AddWithValue("@password", password);
-                        cmd.Parameters.Add(new SqlParameter("@userId", SqlDbType.Int));
-                        cmd.Parameters["@userId"].Direction = ParameterDirection.Output;
+                        //cmd.Parameters.AddWithValue(":uname", userName);
+                        //cmd.Parameters.AddWithValue(":passw", password);
+                        cmd.Parameters.Add(new NpgsqlParameter("@uname", userName));
+                        cmd.Parameters.Add(new NpgsqlParameter("@passw", password));
+                        NpgsqlParameter outParm = new NpgsqlParameter("@UserIdVal", NpgsqlDbType.Integer)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        cmd.Parameters.Add(outParm);
+                        //cmd.Parameters.Add(new NpgsqlParameter("@userId", DbType.Int32));
+                        //cmd.Parameters["@userId"].Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        if (cmd.Parameters["@userId"].Value == null)
+                        if (!outParm.Value.Equals(DBNull.Value))
                         {
-                            _result[ResultKey.Success] = false;
-                            _result[ResultKey.Message] = Message.Failed;
-                        }
-                        else
-                        {
-                            if (!cmd.Parameters["@userId"].Value.Equals(DBNull.Value))
+                            if (outParm.Value != null)
                             {
                                 _result[ResultKey.Success] = true;
                                 _result[ResultKey.Message] = Message.Success;
-                                _result[ResultKey.UserId] = cmd.Parameters["@userId"].Value;
+                                _result[ResultKey.UserId] = outParm.Value;
                             }
-                            else
-                            {
+                            else {
                                 _result[ResultKey.Success] = false;
                                 _result[ResultKey.Message] = Message.Failed;
                             }
                         }
+                        else {
+                            _result[ResultKey.Success] = false;
+                            _result[ResultKey.Message] = Message.Failed;
+                        }
                     }
-                    con.Close();
+                    sqlcon.Close();
                 }
+                //using (var con = new SqlConnection(ConnectionString))
+                //{
+                //    await con.OpenAsync();
+
+                //    con.Close();
+                //}
                 return _result;
             }
             catch (Exception)

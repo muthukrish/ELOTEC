@@ -7,7 +7,7 @@ namespace ELOTEC.Infrastructure.Constants
 {
     public static class Message
     {
-        public const string Success = "Success";
-        public const string Failed = "Failed";
+        public const string Success ="Success";
+        public const string Failed ="Failed";
     }
 }

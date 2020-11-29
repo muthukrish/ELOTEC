@@ -13,5 +13,12 @@
         public const string CustomItemList = "CustomItemList";
         public const string DeviceSettingDetails = "DeviceSettingDetails";
         public const string UserList = "UserList";
+        public const string DeviceRegisteredRoom = "DeviceRegisteredRoom";
+        public const string UnRegisteredRoomList = "UnRegisteredRoomList";
+        public const string DeviceId = "DeviceId";
+        public const string License = "License";
+
+
+
     }
 }

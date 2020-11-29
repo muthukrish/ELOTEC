@@ -52,32 +52,32 @@ namespace ELOTEC.Controllers
         //}
 
         [HttpGet]
-        [Route("GetDeviceList")]
-        public async Task<ActionResult> GetDeviceList(string fromDateVal, string toDateVal, string deviceName, int userId,int page,int size)
+        [Route("DList")]
+        public async Task<ActionResult> GetDeviceList(string fVal, string tVal, string dName, int uId, int p, int s)
         {
             string filterStr = "";
-            filterStr = " where DeviceId > 0 and isActive=1";
-            if (fromDateVal != null && toDateVal != null)
+            filterStr = " where DeviceId > 0 and isActive=true";
+            if (fVal != null && tVal != null)
             {
-                filterStr = filterStr + " and ((Updated_Date >= '" + String.Format("{0:M/d/yyyy}", fromDateVal) + "' and Updated_Date <= '" + String.Format("{0:M/d/yyyy}", toDateVal) + "') or Updated_Date is null)";
+                filterStr = filterStr + " and ((Updated_Date >= '" + String.Format("{0:M/d/yyyy}", fVal) + "' and Updated_Date <= '" + String.Format("{0:M/d/yyyy}", tVal) + "') or Updated_Date is null)";
             }
-            else if (fromDateVal != null)
+            else if (fVal != null)
             {
-                filterStr = filterStr + " and ((Updated_Date >= '" + String.Format("{0:M/d/yyyy}", fromDateVal) + "') or Updated_Date is null)";
+                filterStr = filterStr + " and ((Updated_Date >= '" + String.Format("{0:M/d/yyyy}", fVal) + "') or Updated_Date is null)";
             }
-            else if (toDateVal != null)
+            else if (tVal != null)
             {
-                filterStr = filterStr + " and ((Updated_Date <= '" + String.Format("{0:M/d/yyyy}", toDateVal) + "') or Updated_Date is null)";
+                filterStr = filterStr + " and ((Updated_Date <= '" + String.Format("{0:M/d/yyyy}", tVal) + "') or Updated_Date is null)";
             }
-            if (deviceName != "" && deviceName != null)
+            if (dName != "" && dName != null)
             {
-                filterStr = filterStr + " and DeviceName like '%" + deviceName + "%'";
+                filterStr = filterStr + " and DeviceName like '%" + dName + "%'";
             }
-            if (userId != null && userId > 0)
+            if (uId != null && uId > 0)
             {
-                filterStr = filterStr + " and (UserId in(" + userId + "))";
+                filterStr = filterStr + " and (UserId in(" + uId + "))";
             }
-            var DeviceList = await _IConfiguredRoom.GetDeviceSettingDetails(filterStr, fromDateVal, toDateVal, deviceName, userId, page, size);
+            var DeviceList = await _IConfiguredRoom.GetDeviceSettingDetails(filterStr, fVal, tVal, dName, uId, p, s);
             return Json(DeviceList);
         }
 

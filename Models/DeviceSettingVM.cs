@@ -10,9 +10,9 @@ namespace ELOTEC.Models
         public int DeviceId { get; set; }
         public string DeviceName { get; set; }
         public byte IsActive { get; set; }
-        public int RadorCoverageArea { get; set; }
+        public double RadorCoverageArea { get; set; }
         public byte RadorCoverageStatus { get; set; }
-        public int RadorSensitivityLevel { get; set; }
+        public double RadorSensitivityLevel { get; set; }
         public byte RadorSensitivityStatus { get; set; }
         public byte BeepStatus { get; set; }
         public byte RadorLEDIndicatorStatus { get; set; }

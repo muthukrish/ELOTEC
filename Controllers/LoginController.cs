@@ -42,7 +42,7 @@
         //    catch (Exception ex) {
         //        throw ex;
         //    }
-           
+
         //}
 
         [AllowAnonymous]
@@ -53,7 +53,8 @@
         {
             try
             {
-                var loginResponse = await _loginRepo.LoginCheck(userName, passWord);
+                string EncryptedPassword = Cryptography.Encrypt(passWord);
+                var loginResponse = await _loginRepo.LoginCheck(userName, EncryptedPassword);
                 return Json(loginResponse);
             }
             catch (Exception ex)

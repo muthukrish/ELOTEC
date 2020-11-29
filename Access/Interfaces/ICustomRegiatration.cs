@@ -8,7 +8,7 @@ namespace ELOTEC.Access.Interfaces
 {
     interface ICustomRegiatration
     {
-        Task<ResultObject> GetCustomItemlist(int userId, int deviceId);
+        Task<ResultObject> GetCustomItemlist(int userId, int roomid);
 
         Task<ResultObject> UpdateCustomItem(int userId, int deviceId, int itemId, byte RegStatus);
     }

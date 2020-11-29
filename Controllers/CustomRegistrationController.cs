@@ -54,15 +54,15 @@ namespace ELOTEC.Controllers
 
         [Route("GetCustomItemlist")]
         [HttpGet]
-        public async Task<ActionResult> GetCustomItemlist(int userId, int deviceId)
+        public async Task<ActionResult> GetCustomItemlist(int userId, int roomid)
         {
-            var CustomItemList = await _ICustomRegiatration.GetCustomItemlist(userId, deviceId);
+            var CustomItemList = await _ICustomRegiatration.GetCustomItemlist(userId, roomid);
             return Json(CustomItemList);
         }
         [Route("UpdateCustomItem")]
         [HttpGet]
-        public async Task<ActionResult> UpdateCustomItem(int userId, int deviceId,int itemId,byte regStatus) {
-            var UpdatedStatus = await _ICustomRegiatration.UpdateCustomItem(userId, deviceId, itemId, regStatus);
+        public async Task<ActionResult> UpdateCustomItem(int userId, int deviceId,int itemId,byte activate) {
+            var UpdatedStatus = await _ICustomRegiatration.UpdateCustomItem(userId, deviceId, itemId, activate);
             return Json(UpdatedStatus);
         }
     }

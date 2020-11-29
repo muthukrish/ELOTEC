@@ -21,7 +21,7 @@ namespace ELOTEC.Models
         public string ItemName { get; set; }
         public string Axis { get; set; }
         public byte IsRegistered { get; set; }
-        public byte IsActive { get; set; }
+        //public byte IsActive { get; set; }
     }
     public class DeviceLastUpdatedDetailsVM
     {

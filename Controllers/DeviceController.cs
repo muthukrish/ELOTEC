@@ -53,8 +53,33 @@ namespace ELOTEC.Controllers
 
         [HttpGet]
         [Route("UpdateRoomNumber")]
-        public async Task<ActionResult> UpdateRoomNo(int userId, int deviceId, string roomName) {
-            var updateStatus = await _IDevice.UpdateRoomNo(userId, deviceId, roomName);
+        public async Task<ActionResult> UpdateRoomNo(int userId, int deviceId, string roomName,string pfix,int roomNo) {
+            var updateStatus = await _IDevice.UpdateRoomNo(userId, deviceId, roomName, pfix, roomNo);
+            return Json(updateStatus);
+        }
+
+        [HttpGet]
+        [Route("RegisterRoom")]
+        public async Task<ActionResult> RegisterRoom(int userId, int deviceId, int roomId)
+        {
+            var updateStatus = await _IDevice.RegisterRoom(userId, deviceId, roomId);
+            return Json(updateStatus);
+        }
+
+        [HttpGet]
+        [Route("UnRegisterRoom")]
+        public async Task<ActionResult> UnRegisterRoom(int userId, int deviceId, int roomId)
+        {
+            var updateStatus = await _IDevice.UnRegisterRoom(userId, deviceId, roomId);
+            return Json(updateStatus);
+        }
+
+
+        [HttpGet]
+        [Route("DeviceRegRoomDetails")]
+        public async Task<ActionResult> DeviceRegRoomDetails(string bleid)
+        {
+            var updateStatus = await _IDevice.DeviceRegRoomDetails(bleid);
             return Json(updateStatus);
         }
     }

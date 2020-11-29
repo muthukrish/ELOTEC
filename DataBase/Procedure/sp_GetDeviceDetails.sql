@@ -100,7 +100,7 @@ BEGIN
 				--) AS IsActive
 			FROM Registration_Details RD
 			WHERE DeviceId = @deviceId
-				AND IsActive = 1 order by ItemId asc
+				AND IsActive = 1 and RD.IsCustom=1  order by ItemId asc
 
 	END
 END
